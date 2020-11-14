@@ -70,7 +70,7 @@ transformation() const
 {
     scalar t = time_.value();
 
-    const vector displacement = H_amplitude_*Foam::sin(omega_*t + Foam:constant::mathematical::pi/2) - H_amplitude;
+    const vector displacement = H_amplitude_*Foam::sin(omega_*t + Foam::constant::mathematical::pi/2) - H_amplitude_;
     vector eulerAngles = P_amplitude_*Foam::sin(omega_*t);
     //vector eulerAngles = amplitude_*sin(omega_*t);
 
