@@ -66,10 +66,10 @@ class flappingMotion
         scalar omega_;
 
 	//- Heave amplitude
-	scalar H_amplitude_;
+	vector H_amplitude_;
 
 	//- Pitch amplitude
-	scalar P_amplitude_;
+	vector P_amplitude_;
 
     // Private Member Functions
 
