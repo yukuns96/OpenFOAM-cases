@@ -1,0 +1,9 @@
+This motion function is designed for unsymmetric flapping motion
+More compatible with general inputs including stroke angle:
+
+INPUTS:
+	1. beta
+	2. h-c ratio (h/c)
+	3. chord length
+	4. pitch amplitude
+	5. heave amplitude
