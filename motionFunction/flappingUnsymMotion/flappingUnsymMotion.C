@@ -69,6 +69,7 @@ Foam::solidBodyMotionFunctions::flappingUnsymMotion::
 transformation() const
 {
     scalar t = time_.value();
+    scalar omega = 2.0*Foam::constant::mathematical::pi*f_;
 
     const vector displacement = H_amplitude_*Foam::sin(omega_*t + Foam::constant::mathematical::pi/2) - H_amplitude_;
     vector eulerAngles = P_amplitude_*Foam::sin(omega_*t);
