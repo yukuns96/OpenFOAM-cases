@@ -71,22 +71,27 @@ transformation() const
     scalar t = time_.value();
     scalar omega = 2.0*Foam::constant::mathematical::pi*f_;
 
+    // Convert beta to rad
+    scalar beta = beta_*Foam::constant::mathematical::pi/180.0;
+  
     // Translational displacement
-    scalar x = h_/Foam::tan(beta_) * Foam::cos(omega*t);
+    scalar x = h_/Foam::tan(beta) * Foam::cos(omega*t);
     scalar y = h_ * Foam::cos(omega*t) - h_;
     scalar z = 0.0;
 
     // Translaional time derivative
-    scalar xd = -omega*h_ /Foam::tan(beta_) * Foam::sin(omega*t);
+    scalar xd = -omega*h_ /Foam::tan(beta) * Foam::sin(omega*t);
     scalar yd = -omega*h_ * Foam::sin(omega*t);
 
     //AOA profile
-    scalar alpha = alpha_m_ * (0.5-0.5*Foam::cos(2.0*omega*t));
+    //scalar alpha = alpha_m_ * (0.5-0.5*Foam::cos(2.0*omega*t));
+    scalar alpha = alpha_m_ * Foam::sin(omega*t);
 
     // Rotational displacement
     scalar theta_x = 0.0;
     scalar theta_y = 0.0;
-    scalar theta_z = -(Foam::atan2(yd,(magU_ - xd)) + alpha);
+    scalar theta_z = -(Foam::atan2(yd,(magU_ - xd)) + alpha*Foam::constant::mathematical::pi/180.0);
+    theta_z *= 180.0/Foam::constant::mathematical::pi;
 
     //const vector displacement = H_amplitude_*Foam::sin(omega_*t + Foam::constant::mathematical::pi/2) - H_amplitude_;
     const vector displacement(x,y,z);
