@@ -26,7 +26,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#include "flappingMotion.H"
+#include "flappingUnsymMotion.H"
 #include "addToRunTimeSelectionTable.H"
 #include "unitConversion.H"
 
@@ -36,11 +36,11 @@ namespace Foam
 {
 namespace solidBodyMotionFunctions
 {
-    defineTypeNameAndDebug(flappingMotion, 0);
+    defineTypeNameAndDebug(flappingUnsymMotion, 0);
     addToRunTimeSelectionTable
     (
         solidBodyMotionFunction,
-        flappingMotion,
+        flappingUnsymMotion,
         dictionary
     );
 }
@@ -49,8 +49,8 @@ namespace solidBodyMotionFunctions
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-Foam::solidBodyMotionFunctions::flappingMotion::
-flappingMotion
+Foam::solidBodyMotionFunctions::flappingUnsymMotion::
+flappingUnsymMotion
 (
     const dictionary& SBMFCoeffs,
     const Time& runTime
@@ -65,7 +65,7 @@ flappingMotion
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
 Foam::septernion
-Foam::solidBodyMotionFunctions::flappingMotion::
+Foam::solidBodyMotionFunctions::flappingUnsymMotion::
 transformation() const
 {
     scalar t = time_.value();
@@ -88,7 +88,7 @@ transformation() const
 }
 
 
-bool Foam::solidBodyMotionFunctions::flappingMotion::read
+bool Foam::solidBodyMotionFunctions::flappingUnsymMotion::read
 (
     const dictionary& SBMFCoeffs
 )

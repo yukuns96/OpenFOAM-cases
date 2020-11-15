@@ -126,6 +126,7 @@ $(solidBodyMotionFunctions)/multiMotion/multiMotion.C
 $(solidBodyMotionFunctions)/oscillatingLinearMotion/oscillatingLinearMotion.C
 $(solidBodyMotionFunctions)/oscillatingRotatingMotion/oscillatingRotatingMotion.C
 $(solidBodyMotionFunctions)/flappingMotion/flappingMotion.C
+$(solidBodyMotionFunctions)/flappingUnsymMotion/flappingUnsymMotion.C
 
 motionSolvers/displacement/solidBody/pointPatchFields/derived/solidBodyMotionDisplacement/solidBodyMotionDisplacementPointPatchVectorField.C
 
