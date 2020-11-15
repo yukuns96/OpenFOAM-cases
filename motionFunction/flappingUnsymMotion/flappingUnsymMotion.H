@@ -35,8 +35,8 @@ SourceFiles
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef flappingMotion_H
-#define flappingMotion_H
+#ifndef flappingUmsymMotion_H
+#define flappingUmsymMotion_H
 
 #include "solidBodyMotionFunction.H"
 #include "primitiveFields.H"
@@ -53,7 +53,7 @@ namespace solidBodyMotionFunctions
                           Class oscillatingRotatingMotion Declaration
 \*---------------------------------------------------------------------------*/
 
-class flappingMotion
+class flappingUnsymMotion
 :
     public solidBodyMotionFunction
 {
@@ -62,34 +62,40 @@ class flappingMotion
         //- Centre of gravity
         point origin_;
 
-        //- Radial velocity
-        scalar omega_;
+        //- Flapping frequency
+        scalar f_;
 
 	//- Heave amplitude
-	vector H_amplitude_;
+	scalar h_;
 
-	//- Pitch amplitude
-	vector P_amplitude_;
+	//- AOA amplitude
+	scalar alpha_m_;
+
+	//- Stroke angle
+	scalar beta_;
+
+	//- Freestream velocity
+	scalar magU_;
 
     // Private Member Functions
 
         //- No copy construct
-        flappingMotion(const flappingMotion&) = delete;
+        flappingUnsymMotion(const flappingUnsymMotion&) = delete;
 
         //- No copy assignment
-        void operator=(const flappingMotion&) = delete;
+        void operator=(const flappingUnsymMotion&) = delete;
 
 
 public:
 
     //- Runtime type information
-    TypeName("flappingMotion");
+    TypeName("flappingUnsymMotion");
 
 
     // Constructors
 
         //- Construct from components
-        flappingMotion
+        flappingUnsymMotion
         (
             const dictionary& SBMFCoeffs,
             const Time& runTime
@@ -100,7 +106,7 @@ public:
         {
             return autoPtr<solidBodyMotionFunction>
             (
-                new flappingMotion
+                new flappingUnsymMotion
                 (
                     SBMFCoeffs_,
                     time_
@@ -110,7 +116,7 @@ public:
 
 
     //- Destructor
-    virtual ~flappingMotion() = default;
+    virtual ~flappingUnsymMotion() = default;
 
 
     // Member Functions

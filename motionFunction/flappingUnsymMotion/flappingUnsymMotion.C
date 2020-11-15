@@ -71,9 +71,29 @@ transformation() const
     scalar t = time_.value();
     scalar omega = 2.0*Foam::constant::mathematical::pi*f_;
 
-    const vector displacement = H_amplitude_*Foam::sin(omega_*t + Foam::constant::mathematical::pi/2) - H_amplitude_;
-    vector eulerAngles = P_amplitude_*Foam::sin(omega_*t);
+    // Translational displacement
+    scalar x = h_/Foam::tan(beta_) * Foam::cos(omega*t);
+    scalar y = h_ * Foam::cos(omega*t) - h_;
+    scalar z = 0.0;
+
+    // Translaional time derivative
+    scalar xd = -omega*h_ /Foam::tan(beta_) * Foam::sin(omega*t);
+    scalar yd = -omega*h_ * Foam::sin(omega*t);
+
+    //AOA profile
+    scalar alpha = alpha_m_ * (0.5-0.5*Foam::cos(2.0*omega*t));
+
+    // Rotational displacement
+    scalar theta_x = 0.0;
+    scalar theta_y = 0.0;
+    scalar theta_z = -(Foam::atan2(yd,(magU_ - xd)) + alpha);
+
+    //const vector displacement = H_amplitude_*Foam::sin(omega_*t + Foam::constant::mathematical::pi/2) - H_amplitude_;
+    const vector displacement(x,y,z);
+
+    //vector eulerAngles = P_amplitude_*Foam::sin(omega_*t);
     //vector eulerAngles = amplitude_*sin(omega_*t);
+    vector eulerAngles(theta_x,theta_y,theta_z);
 
     // Convert the rotational motion from deg to rad
     eulerAngles *= degToRad();
@@ -102,10 +122,12 @@ bool Foam::solidBodyMotionFunctions::flappingUnsymMotion::read
     SBMFCoeffs_.readEntry("omega", omega_);
     */
 
-    SBMFCoeffs_.lookup("H_amplitude")>>H_amplitude_;
-    SBMFCoeffs_.lookup("P_amplitude")>>P_amplitude_;
+    SBMFCoeffs_.lookup("magU")>>magU_;
+    SBMFCoeffs_.lookup("f")>>f_;
     SBMFCoeffs_.lookup("origin")>>origin_;
-    SBMFCoeffs_.lookup("omega")>>omega_;
+    SBMFCoeffs_.lookup("h")>>h_;
+    SBMFCoeffs_.lookup("alpha_max")>>alpha_m_;
+    SBMFCoeffs_.lookup("beta")>>beta_;
 
     return true;
 }
