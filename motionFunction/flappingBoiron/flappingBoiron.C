@@ -70,9 +70,9 @@ transformation() const
 {
     scalar t = time_.value();
 
-    const vector displacement = H_amplitude_*Foam::sin(omega_*t) - H_amplitude_; //Foam::constant::mathematical::pi/2)
+    const vector displacement = H_amplitude_*Foam::sin(omega_*t); //Foam::constant::mathematical::pi/2)
 
-    vector eulerAngles = P_amplitude_*Foam::sin(omega_*t + Foam::constant::mathematical::pi/2.0);
+    vector eulerAngles = P_amplitude_*Foam::sin(omega_*t + Foam::constant::mathematical::pi/2.0) - P_amplitude_;
     //vector eulerAngles = amplitude_*sin(omega_*t);
 
     // Convert the rotational motion from deg to rad
