@@ -1,8 +1,8 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2006                                 |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -27,15 +27,15 @@ endTime         5.8;
 
 deltaT          1e-4;
 
-writeControl    timeStep;
+writeControl    adjustableRunTime;
 
-writeInterval   1;
+writeInterval   0.001;
 
-purgeWrite      0;
+purgeWrite     	1;
 
 writeFormat     ascii;
 
-writePrecision  6;
+writePrecision  7;
 
 writeCompression off;
 
@@ -44,35 +44,66 @@ timeFormat      general;
 timePrecision   6;
 
 runTimeModifiable true;
-
 adjustTimeStep yes;
-
 maxCo 0.9;
 
-function
+//libs ("libIBTurbulenceModels.so");
+
+functions
 {
+/*
+    forces1
+    {
+        type            forces;
+        libs            ("libforces.so");
+        writeControl    writeTime;
+        writeInterval   1;
+        patches         (airfoil);
+        CofR		(0 0 0);
+        log             on;
+        rho  rhoInf;
+        rhoInf 1;
+    }
+*/
+
+    #includeFunc Q
+
     coefficient
     {
-	    type	forceCoeffs;
-	    libs	("libforces.so");
-	    writeControl timeStep;
-	    patches	(block);
-	    CofR	(0.5 0 0);
-	    log 	on;
-	    rho		rhoInf;
-	    rhoInf	1;
-	    liftDir	(0 1 0);
-	    dragDir	(-1 0 0);
-	    pitchAxis	(0 0 1);
-	    lRef 	1.0;
-	    Aref	1.0;
+	type		forceCoeffs;
+	libs		("libforces.so");
+	writeControl	timeStep;
+	writeInterval	1;
+	patches		(block);
+	CofR		(0.5 0 0);
+	log		on;
+	rho		rhoInf;
+	rhoInf		1;
+	liftDir		(0 1 0);
+	dragDir		(-1 0 0);
+	pitchAxis	(0 0 1);
+	magUInf		1.0;
+	lRef		1.0;
+	Aref		1.0;
     }
 
     vorticity
     {
-	    type	vorticity;
-	    libs	(fieldFunctionObjects);
-	    writeControl	writeTime;
+	type		vorticity;
+	libs		(fieldFunctionObjects);
+	writeControl	writeTime;
+    }
+
+    yPlus
+    {
+	type		yPlus;
+	libs		(fieldFunctionObjects);
+	writeControl	writeTime;
+	//writeInterval	1;
+	log 		true;
     }
 }
+
+
+
 // ************************************************************************* //
