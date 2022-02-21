@@ -1,0 +1,110 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pimpleFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         1.51;
+
+deltaT          1e-3;
+
+writeControl    adjustableRunTime;
+
+writeInterval   1;
+
+purgeWrite     	0;
+
+writeFormat     ascii;
+
+writePrecision  7;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+adjustTimeStep yes;
+maxCo 1.0;
+
+//libs ("libIBTurbulenceModels.so");
+
+functions
+{
+/*
+    forces1
+    {
+        type            forces;
+        libs            ("libforces.so");
+        writeControl    writeTime;
+        writeInterval   1;
+        patches         (airfoil);
+        CofR		(0 0 0);
+        log             on;
+        rho  rhoInf;
+        rhoInf 1;
+    }
+*/
+
+//    #includeFunc Q
+
+    coefficient
+    {
+	type		forceCoeffs;
+	libs		("libforces.so");
+	writeControl	timeStep;
+	writeInterval	1;
+	patches		(airfoil);
+	CofR		(0.25 0 0);
+	log		on;
+	rho		rhoInf;
+	rhoInf		1;
+	liftDir		(0 1 0);
+	dragDir		(-1 0 0);
+	pitchAxis	(0 0 1);
+	magUInf		1.1;
+	lRef		1.0;
+	Aref		1.0;
+    }
+/*
+    vorticity
+    {
+	type		vorticity;
+	libs		(fieldFunctionObjects);
+	writeControl	writeTime;
+    }
+
+    yPlus
+    {
+	type		yPlus;
+	libs		(fieldFunctionObjects);
+	writeControl	writeTime;
+	//writeInterval	1;
+	log 		true;
+    }
+*/
+}
+
+
+
+// ************************************************************************* //

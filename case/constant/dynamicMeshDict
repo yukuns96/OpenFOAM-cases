@@ -1,0 +1,27 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dynamicFvMesh   dynamicMotionSolverFvMesh;
+
+motionSolver    solidBody;
+
+solidBodyMotionFunction flappingUnsymMotionTrue;
+flappingUnsymMotionTrueCoeffs
+{
+	solidBodyMotionFunction	flappingUnsymMotionTrue;
+	origin (0.25 0 0);
+        f 1.0;
+        h 1.0;
+        beta 1.5707963267948966;
+        alpha_max 1.3962634015954636;
+	magU	1.1;
+}
+
+// ************************************************************************* //
